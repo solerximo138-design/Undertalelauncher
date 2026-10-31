@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#08070d">
+<meta name="description" content="Unofficial fan-made UNDERTALE launcher with pixel touch controls and a GameBanana mod browser.">
+<title>UNDERTALE LAUNCHER // Pixel Edition</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="./css/fonts.css">
+<link rel="stylesheet" href="./css/base.css">
+<link rel="stylesheet" href="./css/launcher.css">
+<link rel="stylesheet" href="./css/mods.css">
+<link rel="stylesheet" href="./css/game.css">
+</head>
+<body data-view="launcher">
+<svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-heart" viewBox="0 0 9 8"><path d="M1 1h2v1H1zM6 1h2v1H6zM0 2h9v2H0zM0 4h9v1H0zM1 5h7v1H1zM2 6h5v1H2zM3 7h3v1H3z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 12 12"><path d="M2 1h2v10H2zM4 2h2v8H4zM6 3h2v6H6zM8 4h2v4H8zM10 5h1v2h-1z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 14 14"><path d="M5 0h4v2h1v1h2v1h1v4h-1v1h-2v1h-1v2H5v-2H4v-1H2V8H1V4h1V3h2V2h1zM5 4v1H4v3h1v1h3V8h1V5H8V4z"/></symbol>
+  <symbol id="i-puzzle" viewBox="0 0 14 14"><path d="M1 1h5v2h1v1h1v1h2V3h1V1h2v5h-2v1h-1v1h1v1h2v4h-4v-2H8v-1H7v1H6v2H1V9h2V8h1V7H3V6H1z"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 14 14"><path d="M1 5h3V3h2v1h1v2h1v2H7v2H6v1H4v-2H1zM10 4h1v2h1v2h-1v2h-1v-1h1V8h1V6h-1z"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 14 14"><path d="M1 5h3V3h2v1h1v2h1v2H7v2H6v1H4v-2H1zM10 4h1v1h1V4h1v1h-1v1h1v1h-1V6h-1v1h-1V6h1V5h-1z"/></symbol>
+  <symbol id="i-full" viewBox="0 0 14 14"><path d="M1 1h4v2H3v2H1zM9 1h4v4h-2V3H9zM1 9h2v2h2v2H1zM11 9h2v4H9v-2h2z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 12 12"><path d="M1 5h2v2H1zM3 3h2v6H3zM5 1h2v10H5zM7 3h2v6H7zM9 5h2v2H9z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 14 14"><path d="M2 2h6v1h1v1h1v4h-1v1H8v1H4v-1H3V8H2zM4 4v1H3v2h1v1h3V7h1V5H7V4zM10 9h1v1h1v1h1v1h-2v-1h-1v-1h-1V9z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 14 14"><path d="M4 1h5v2H6v1H4v2H2V3h1V2h1zM1 6h2v3h1v1h2v1h2v-1h1v-2h2v3h-1v1H8v1H5v-1H3v-1H2v-1H1zM11 6h2v2h-2z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 14 14"><path d="M6 1h2v5h2V5h1v1h1v2h-1v1h-1v1H9v1H5v-1H4V9H3V8H2V6h1V5h1v1h2zM1 12h12v2H1z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 14 14"><path d="M4 1h6v2H4zM2 4h10v2H2zM3 7h2v5H3zM6 7h2v5H6zM9 7h2v5H9z"/></symbol>
+  <symbol id="i-external" viewBox="0 0 14 14"><path d="M7 1h6v6h-2V5H9v2H7V5H5V3h2zM1 4h4v2H3v6h6V9h2v4H1z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 14 14"><path d="M1 7h2v2h2v2h2v-2H5V7h2V5h2V3h2V1h2v4h-2v2H9v2H7v2H5v2H3v-2H1z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 12 12"><path d="M1 1h2v2H1zM3 3h2v2H3zM5 5h2v2H5zM7 3h2v2H7zM9 1h2v2H9zM3 7h2v2H3zM1 9h2v2H1zM7 7h2v2H7zM9 9h2v2H9z"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 14 14"><path d="M6 1h2v5h2V5h1v1h1v2h-1v1h-1v1H9v1H5v-1H4V9H3V8H2V6h1V5h1v1h2zM1 12h12v2H1z" transform="rotate(180 7 7)"/></symbol>
+  <symbol id="i-pad" viewBox="0 0 16 14"><path d="M3 3h10v2h1v6h-2v1H4v-1H2V5h1zM4 6v2H3v2h2V8h2V6H5V5H4zM10 5h2v1h1v1h-1v1h-2V7H9V6h1zM6 10h4v1H6z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 12 12"><path d="M5 0h2v3h1v1h3v2H8v1h1v1h1v3H8v-1H7v-1H5v1H4v1H1V8h1V7h1V6H0V4h3V3h1V2h1z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 14 14"><path d="M5 1h4v1H5zM3 2h2v1H3zM9 2h2v1H9zM2 3h1v2H2zM11 3h1v2h-1zM1 5h1v4H1zM12 5h1v4h-1zM2 9h1v2H2zM11 9h1v2h-1zM3 11h2v1H3zM9 11h2v1H9zM5 12h4v1H5zM6 3h2v8H6zM2 6h10v2H2z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 12 12"><path d="M2 2h3v8H2zM7 2h3v8H7z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 14 14"><path d="M6 1h2v1H6zM4 3h2v1H4zM8 3h2v1H8zM2 5h2v1H2zM10 5h2v1h-2zM1 6h1v7H1zM12 6h1v7h-1zM3 7h8v6H3zM6 9h2v4H6z"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 14 14"><path d="M5 2h4v1H5zM2 4h2v1H2zM10 4h2v1h-2zM0 6h2v1H0zM12 6h2v1h-2zM4 7h6v1H4zM6 9h2v1H6zM6 12h2v1H6z"/></symbol>
+</svg>
+
+<div id="app" class="app">
+  <canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <div class="bg-wash" aria-hidden="true"></div>
+  <div class="fx fx-scanlines" aria-hidden="true"></div>
+  <div class="fx fx-vignette" aria-hidden="true"></div>
+  <div class="fx fx-noise" aria-hidden="true"></div>
+  <div class="fx fx-flash" id="flash" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-brand" aria-label="UNDERTALE LAUNCHER">
+      <svg class="pixel-icon brand-heart" aria-hidden="true"><use href="#i-heart"/></svg>
+      <span class="brand-word">UTL<span class="brand-slash">//</span>01</span>
+      <span class="brand-status"><i class="status-dot"></i><span data-i18n="top.online">ONLINE</span></span>
+    </div>
+    <div class="topbar-actions">
+      <button class="tool-btn" id="langBtn" type="button" title="Сменить язык / Change language" aria-label="Сменить язык">
+        <svg class="pixel-icon" aria-hidden="true"><use href="#i-globe"/></svg><span id="langLabel">RU</span>
+      </button>
+      <button class="tool-btn" id="soundBtn" type="button" title="Звук / Sound" aria-label="Звук" aria-pressed="true">
+        <svg class="pixel-icon" aria-hidden="true"><use href="#i-sound"/></svg>
+      </button>
+      <button class="tool-btn" id="fullscreenBtn" type="button" title="Полный экран / Fullscreen" aria-label="Полный экран">
+        <svg class="pixel-icon" aria-hidden="true"><use href="#i-full"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="launcherView" class="view launcher-view" aria-label="Launcher menu">
+    <section class="hero" aria-labelledby="gameTitle">
+      <div class="hero-kicker"><span class="kicker-line"></span><span data-i18n="hero.kicker">A FAN-MADE PIXEL LAUNCHER</span><span class="kicker-line"></span></div>
+      <div class="logo-wrap">
+        <svg class="hero-soul" viewBox="0 0 9 8" aria-hidden="true"><use href="#i-heart"/></svg>
+        <h1 class="game-logo" id="gameTitle" aria-label="UNDERTALE">UNDERTALE</h1>
+        <p class="logo-sub"><span>LAUNCHER</span><i class="sub-dash"></i><span>PIXEL EDITION</span></p>
+      </div>
+      <p class="hero-tagline" data-i18n="hero.tagline">Спустись в подземелье. Моды, пиксели и мобильное управление.</p>
+      <div class="hero-badges" role="list">
+        <span class="badge" role="listitem"><svg class="pixel-icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span data-i18n="hero.badge1">GAMEBANANA READY</span></span>
+        <span class="badge" role="listitem"><svg class="pixel-icon" aria-hidden="true"><use href="#i-pad"/></svg><span data-i18n="hero.badge2">TOUCH ENABLED</span></span>
+        <span class="badge" role="listitem"><svg class="pixel-icon" aria-hidden="true"><use href="#i-star"/></svg><span id="clearBadge" data-i18n="hero.badge3">SOUL TRIAL</span></span>
+      </div>
+      <div class="hero-quote">
+        <span class="quote-mark">*</span>
+        <p id="heroQuote" data-i18n="hero.quote">«Не бойся. В этом подземелье тебя ждут только хорошие моды.»</p>
+      </div>
+    </section>
+
+    <section class="menu-panel" aria-labelledby="menuHeading">
+      <div class="menu-panel-top">
+        <h2 id="menuHeading" class="menu-heading" data-i18n="menu.title">ГЛАВНОЕ МЕНЮ</h2>
+        <span class="menu-save" id="saveStatus"><svg class="pixel-icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="menu.save">СЕЙВ ГОТОВ</span></span>
+      </div>
+      <nav class="main-menu" aria-label="Main menu">
+        <button class="menu-item is-selected" type="button" data-action="new-game" data-menu-index="0">
+          <span class="menu-heart" aria-hidden="true"><svg class="pixel-icon"><use href="#i-heart"/></svg></span>
+          <span class="menu-icon-wrap"><svg class="pixel-icon" aria-hidden="true"><use href="#i-play"/></svg></span>
+          <span class="menu-copy"><strong data-i18n="menu.new">НОВАЯ ИГРА</strong><small data-i18n="menu.new.desc">Начать спуск · SOUL TRIAL</small></span>
+          <span class="menu-key" aria-hidden="true">Z</span>
+        </button>
+        <button class="menu-item" type="button" data-action="settings" data-menu-index="1">
+          <span class="menu-heart" aria-hidden="true"><svg class="pixel-icon"><use href="#i-heart"/></svg></span>
+          <span class="menu-icon-wrap"><svg class="pixel-icon" aria-hidden="true"><use href="#i-gear"/></svg></span>
+          <span class="menu-copy"><strong data-i18n="menu.settings">НАСТРОЙКИ</strong><small data-i18n="menu.settings.desc">Звук · экран · управление</small></span>
+          <span class="menu-key" aria-hidden="true">X</span>
+        </button>
+        <button class="menu-item" type="button" data-action="mods" data-menu-index="2">
+          <span class="menu-heart" aria-hidden="true"><svg class="pixel-icon"><use href="#i-heart"/></svg></span>
+          <span class="menu-icon-wrap"><svg class="pixel-icon" aria-hidden="true"><use href="#i-puzzle"/></svg></span>
+          <span class="menu-copy"><strong data-i18n="menu.mods">МОДЫ</strong><small data-i18n="menu.mods.desc">GameBanana · data.win · .utmod</small></span>
+          <span class="menu-key" aria-hidden="true">C</span>
+        </button>
+      </nav>
+      <div class="menu-panel-foot">
+        <div class="menu-hint"><span class="keycap">↑</span><span class="keycap">↓</span><span data-i18n="menu.hint.move">ВЫБОР</span><span class="keycap">Z</span><span data-i18n="menu.hint.ok">ОК</span></div>
+        <div class="menu-mod-status" id="activeModStatus" title="Active pack">
+          <span class="mod-dot"></span><span id="activeModName" data-i18n="menu.defaultPack">DEFAULT SOUL</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="mainFooter">
+    <div class="footer-col footer-controls">
+      <span class="footer-label" data-i18n="footer.controls">УПРАВЛЕНИЕ</span>
+      <span class="footer-keys"><span class="keycap">↑↓</span><span data-i18n="footer.nav">меню</span><span class="keycap">Z</span><span data-i18n="footer.ok">выбрать</span><span class="keycap">X</span><span data-i18n="footer.back">назад</span></span>
+    </div>
+    <div class="footer-col footer-disclaimer">
+      <strong data-i18n="footer.fan">НЕОФИЦИАЛЬНЫЙ ФАН-ПРОЕКТ</strong>
+      <span data-i18n="footer.disclaimer">UNDERTALE © Toby Fox. Проект не связан с автором. Игровые ассеты не включены.</span>
+    </div>
+    <div class="footer-col footer-build">
+      <span>BUILD 1.0.0</span>
+      <span class="footer-dot">·</span>
+      <a href="https://gamebanana.com/games/5506" target="_blank" rel="noopener noreferrer">GAMEBANANA</a>
+    </div>
+  </footer>
+
+  <div class="touch-layer menu-touch" id="menuTouch" aria-label="Touch controls">
+    <div class="dpad" role="group" aria-label="D-pad">
+      <button class="pad-btn pad-up" type="button" data-dir="up" aria-label="Вверх"><span>▲</span></button>
+      <button class="pad-btn pad-left" type="button" data-dir="left" aria-label="Влево"><span>◀</span></button>
+      <button class="pad-btn pad-right" type="button" data-dir="right" aria-label="Вправо"><span>▶</span></button>
+      <button class="pad-btn pad-down" type="button" data-dir="down" aria-label="Вниз"><span>▼</span></button>
+      <span class="dpad-center" aria-hidden="true"></span>
+    </div>
+    <div class="action-cluster">
+      <button class="action-btn action-b" type="button" data-act="b" aria-label="Назад"><span>B</span><small data-i18n="touch.back">BACK</small></button>
+      <button class="action-btn action-a" type="button" data-act="a" aria-label="Выбрать"><span>A</span><small data-i18n="touch.ok">OK</small></button>
+    </div>
+  </div>
+
+  <section id="settingsView" class="view settings-view is-hidden" aria-labelledby="settingsTitle" aria-hidden="true">
+    <div class="subpage-head">
+      <button class="back-btn" type="button" data-back="launcher"><svg class="pixel-icon" aria-hidden="true"><use href="#i-back"/></svg><span data-i18n="common.back">НАЗАД</span></button>
+      <div class="subpage-title">
+        <span class="subpage-kicker" data-i18n="settings.kicker">SYSTEM CONFIG</span>
+        <h2 id="settingsTitle" data-i18n="settings.title">НАСТРОЙКИ</h2>
+      </div>
+      <span class="subpage-code">CFG.01</span>
+    </div>
+    <div class="settings-grid">
+      <div class="settings-main">
+        <section class="settings-block">
+          <h3 class="block-title"><span>01</span><span data-i18n="settings.audio">ЗВУК</span></h3>
+          <div class="setting-row">
+            <div class="setting-copy"><label for="musicRange" data-i18n="settings.music">Музыка</label><small data-i18n="settings.music.desc">Оригинальный чиптюн-луп</small></div>
+            <div class="range-wrap"><input type="range" id="musicRange" min="0" max="100" value="45" aria-label="Music volume"><output id="musicOut">45%</output></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><label for="sfxRange" data-i18n="settings.sfx">Эффекты</label><small data-i18n="settings.sfx.desc">Меню, удары, диалоги</small></div>
+            <div class="range-wrap"><input type="range" id="sfxRange" min="0" max="100" value="70" aria-label="SFX volume"><output id="sfxOut">70%</output></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><label data-i18n="settings.crt">CRT-фильтр</label><small data-i18n="settings.crt.desc">Сканлайны и мягкое свечение</small></div>
+            <button class="toggle" type="button" id="crtToggle" role="switch" aria-checked="true"><span class="toggle-knob"></span><span class="toggle-label">ON</span></button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><label data-i18n="settings.shake">Тряска экрана</label><small data-i18n="settings.shake.desc">Удары в SOUL TRIAL</small></div>
+            <button class="toggle" type="button" id="shakeToggle" role="switch" aria-checked="true"><span class="toggle-knob"></span><span class="toggle-label">ON</span></button>
+          </div>
+        </section>
+
+        <section class="settings-block">
+          <h3 class="block-title"><span>02</span><span data-i18n="settings.controls">УПРАВЛЕНИЕ</span></h3>
+          <div class="setting-row setting-row-stack">
+            <div class="setting-copy"><label data-i18n="settings.touch">Экранные кнопки</label><small data-i18n="settings.touch.desc">Пиксельный D-pad и A/B</small></div>
+            <div class="segmented" id="touchMode" role="group" aria-label="Touch controls mode">
+              <button type="button" data-value="auto" class="is-active" data-i18n="settings.auto">АВТО</button>
+              <button type="button" data-value="on" data-i18n="settings.on">ВКЛ</button>
+              <button type="button" data-value="off" data-i18n="settings.off">ВЫКЛ</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><label for="opacityRange" data-i18n="settings.opacity">Прозрачность кнопок</label><small data-i18n="settings.opacity.desc">Чтобы не мешали сцене</small></div>
+            <div class="range-wrap"><input type="range" id="opacityRange" min="30" max="100" value="82" aria-label="Touch controls opacity"><output id="opacityOut">82%</output></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><label data-i18n="settings.lefty">Левая раскладка</label><small data-i18n="settings.lefty.desc">Кнопки A/B слева</small></div>
+            <button class="toggle" type="button" id="leftyToggle" role="switch" aria-checked="false"><span class="toggle-knob"></span><span class="toggle-label">OFF</span></button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><label data-i18n="settings.motion">Меньше движения</label><small data-i18n="settings.motion.desc">Отключить параллакс и мерцание</small></div>
+            <button class="toggle" type="button" id="motionToggle" role="switch" aria-checked="false"><span class="toggle-knob"></span><span class="toggle-label">OFF</span></button>
+          </div>
+        </section>
+
+        <section class="settings-block">
+          <h3 class="block-title"><span>03</span><span data-i18n="settings.personal">ПЕРСОНАЛИЗАЦИЯ</span></h3>
+          <div class="setting-row">
+            <div class="setting-copy"><label data-i18n="settings.lang">Язык интерфейса</label><small data-i18n="settings.lang.desc">Русский / English</small></div>
+            <div class="segmented" id="langMode" role="group" aria-label="Language">
+              <button type="button" data-value="ru" class="is-active">RU</button>
+              <button type="button" data-value="en">EN</button>
+            </div>
+          </div>
+          <div class="setting-row setting-row-stack">
+            <div class="setting-copy"><label data-i18n="settings.soul">Цвет души</label><small data-i18n="settings.soul.desc">Золотой открывается после SOUL TRIAL</small></div>
+            <div class="soul-colors" id="soulColors" role="group" aria-label="Soul color">
+              <button type="button" data-color="red" class="soul-swatch is-active" style="--sw:#ff3b3b" aria-label="Red"></button>
+              <button type="button" data-color="cyan" class="soul-swatch" style="--sw:#5ce1e6" aria-label="Cyan"></button>
+              <button type="button" data-color="lime" class="soul-swatch" style="--sw:#9bff6b" aria-label="Lime"></button>
+              <button type="button" data-color="gold" class="soul-swatch is-locked" data-locked="true" style="--sw:#ffd75e" aria-label="Gold"><svg class="pixel-icon lock-icon" aria-hidden="true"><use href="#i-star"/></svg></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-block settings-danger">
+          <h3 class="block-title"><span>04</span><span data-i18n="settings.data">ДАННЫЕ</span></h3>
+          <div class="setting-row">
+            <div class="setting-copy"><label data-i18n="settings.reset">Сбросить всё</label><small data-i18n="settings.reset.desc">Настройки, прогресс и установленные моды</small></div>
+            <button class="danger-btn" type="button" id="resetBtn"><svg class="pixel-icon" aria-hidden="true"><use href="#i-trash"/></svg><span data-i18n="settings.reset.btn">СБРОС</span></button>
+          </div>
+          <div class="storage-line"><span data-i18n="settings.storage">Хранилище модов</span><span id="storageText">0 B</span></div>
+          <div class="storage-bar"><span id="storageBar" style="width:0%"></span></div>
+        </section>
+      </div>
+
+      <aside class="settings-side">
+        <div class="side-card about-card">
+          <span class="side-kicker">ABOUT</span>
+          <h3>UNDERTALE<br>LAUNCHER</h3>
+          <p data-i18n="about.text">Фан-лаунчер с пиксельным мобильным управлением и браузером модов. Создан с любовью к подземелью.</p>
+          <dl class="about-facts">
+            <div><dt>VERSION</dt><dd>1.0.0</dd></div>
+            <div><dt>ENGINE</dt><dd>HTML5 / CANVAS</dd></div>
+            <div><dt>MODS</dt><dd>GAMEBANANA API v11</dd></div>
+            <div><dt>FORMATS</dt><dd>data.win · ZIP · .utmod</dd></div>
+          </dl>
+          <a class="side-link" href="https://github.com/solerximo138-design/Undertalelauncher" target="_blank" rel="noopener noreferrer"><svg class="pixel-icon" aria-hidden="true"><use href="#i-external"/></svg><span>GITHUB SOURCE</span></a>
+        </div>
+        <div class="side-card legal-card">
+          <span class="side-kicker">LEGAL</span>
+          <p data-i18n="about.legal">UNDERTALE © Toby Fox. Это неофициальный фан-проект. Мы не распространяем игру или её ассеты.</p>
+          <p class="legal-small" data-i18n="about.fonts">Шрифты: Press Start 2P, Pixelify Sans, VT323 (SIL OFL). Моды: GameBanana.</p>
+        </div>
+        <div class="side-card android-card">
+          <span class="side-kicker">ANDROID</span>
+          <h3>APK BUILD</h3>
+          <p data-i18n="about.apk">Собери тот же лаунчер как Android-приложение. Исходники в папке android/.</p>
+          <a class="side-link" href="./downloads/undertale-launcher.apk" download><svg class="pixel-icon" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="about.apk.btn">СКАЧАТЬ APK</span></a>
+          <small id="apkSize" class="apk-size"></small>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="modsView" class="view mods-view is-hidden" aria-labelledby="modsTitle" aria-hidden="true">
+    <div class="subpage-head mods-head">
+      <button class="back-btn" type="button" data-back="launcher"><svg class="pixel-icon" aria-hidden="true"><use href="#i-back"/></svg><span data-i18n="common.back">НАЗАД</span></button>
+      <div class="subpage-title">
+        <span class="subpage-kicker">GAMEBANANA // API V11</span>
+        <h2 id="modsTitle" data-i18n="mods.title">БРАУЗЕР МОДОВ</h2>
+      </div>
+      <div class="mods-head-tools">
+        <span class="online-pill" id="gbStatus"><i class="status-dot"></i><span data-i18n="mods.online">GAMEBANANA</span></span>
+        <button class="tool-btn import-btn" type="button" id="importBtn"><svg class="pixel-icon" aria-hidden="true"><use href="#i-upload"/></svg><span data-i18n="mods.import">ИМПОРТ</span></button>
+      </div>
+    </div>
+
+    <div class="mods-tabs" role="tablist" aria-label="Mods sections">
+      <button class="mods-tab is-active" type="button" role="tab" aria-selected="true" data-tab="browse"><span data-i18n="mods.tab.browse">GAMEBANANA</span><span class="tab-count" id="browseCount"></span></button>
+      <button class="mods-tab" type="button" role="tab" aria-selected="false" data-tab="installed"><span data-i18n="mods.tab.installed">МОИ МОДЫ</span><span class="tab-count" id="installedCount">0</span></button>
+      <div class="mods-tab-spacer"></div>
+      <span class="mods-format-hint"><span data-i18n="mods.formats">ПОДДЕРЖКА:</span> <b>data.win</b> · <b>ZIP</b> · <b>.utmod</b></span>
+    </div>
+
+    <div class="mods-body">
+      <section class="mods-pane" id="browsePane" role="tabpanel">
+        <div class="mods-toolbar">
+          <label class="search-box" for="modSearch">
+            <svg class="pixel-icon" aria-hidden="true"><use href="#i-search"/></svg>
+            <input id="modSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Найти мод: storyshift, dusttale…" data-i18n-placeholder="mods.search">
+            <kbd>/</kbd>
+          </label>
+          <div class="sort-chips" id="sortChips" role="group" aria-label="Sort mods">
+            <button type="button" data-sort="default" class="is-active" data-i18n="mods.sort.featured">В ТРЕНДЕ</button>
+            <button type="button" data-sort="new" data-i18n="mods.sort.new">НОВЫЕ</button>
+            <button type="button" data-sort="updated" data-i18n="mods.sort.updated">ОБНОВЛЁННЫЕ</button>
+          </div>
+          <button class="icon-btn" type="button" id="refreshBtn" aria-label="Обновить"><svg class="pixel-icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+        </div>
+        <div class="mods-meta-line">
+          <span id="browseMeta" data-i18n="mods.loading">ЗАГРУЖАЕМ ПОДЗЕМЕЛЬЕ…</span>
+          <a href="https://gamebanana.com/games/5506" target="_blank" rel="noopener noreferrer" class="meta-link"><svg class="pixel-icon" aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="mods.openGb">ОТКРЫТЬ GAMEBANANA</span></a>
+        </div>
+        <div class="mods-grid" id="modsGrid" aria-live="polite"></div>
+        <div class="mods-state is-hidden" id="browseState">
+          <div class="state-icon"><svg class="pixel-icon" aria-hidden="true"><use href="#i-puzzle"/></svg></div>
+          <h3 id="browseStateTitle">...</h3>
+          <p id="browseStateText">...</p>
+          <button class="pixel-btn" type="button" id="browseRetry" data-i18n="common.retry">ПОВТОРИТЬ</button>
+        </div>
+        <div class="load-more-wrap"><button class="pixel-btn load-more is-hidden" type="button" id="loadMoreBtn"><span data-i18n="mods.loadMore">ЗАГРУЗИТЬ ЕЩЁ</span><span class="load-more-arrow">↓</span></button></div>
+      </section>
+
+      <section class="mods-pane is-hidden" id="installedPane" role="tabpanel">
+        <div class="installed-top">
+          <div class="installed-summary">
+            <h3 data-i18n="mods.installed.title">УСТАНОВЛЕННЫЕ МОДЫ</h3>
+            <p id="installedSummary" data-i18n="mods.installed.desc">data.win и .utmod хранятся локально в браузере.</p>
+          </div>
+          <div class="installed-actions">
+            <button class="pixel-btn" type="button" id="importBtn2"><svg class="pixel-icon" aria-hidden="true"><use href="#i-upload"/></svg><span data-i18n="mods.import.file">ИМПОРТ ФАЙЛА</span></button>
+          </div>
+        </div>
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Import mod file">
+          <svg class="pixel-icon drop-icon" aria-hidden="true"><use href="#i-upload"/></svg>
+          <strong data-i18n="mods.drop.title">ПЕРЕТАЩИ .WIN / .ZIP / .UTMOD</strong>
+          <span data-i18n="mods.drop.desc">или нажми, чтобы выбрать файл. data.win из GameBanana тоже подойдёт.</span>
+          <small data-i18n="mods.drop.note">Файлы не покидают твоё устройство.</small>
+          <input type="file" id="fileInput" accept=".win,.zip,.utmod,.json" hidden>
+        </div>
+        <div class="starter-head">
+          <h3 data-i18n="mods.starter">СТАРТОВЫЕ ПАКИ</h3>
+          <span data-i18n="mods.starter.desc">Оригинальные темы для SOUL TRIAL</span>
+        </div>
+        <div class="starter-grid" id="starterGrid"></div>
+        <div class="installed-list-head">
+          <h3><span data-i18n="mods.library">БИБЛИОТЕКА</span> <span id="libraryCount" class="count-chip">0</span></h3>
+          <button class="text-btn" type="button" id="clearInactive" data-i18n="mods.clearInactive">УДАЛИТЬ НЕАКТИВНЫЕ</button>
+        </div>
+        <div class="installed-list" id="installedList"></div>
+        <div class="mods-state is-hidden" id="installedEmpty">
+          <div class="state-icon"><svg class="pixel-icon" aria-hidden="true"><use href="#i-heart"/></svg></div>
+          <h3 data-i18n="mods.empty.title">ПОКА ПУСТО</h3>
+          <p data-i18n="mods.empty.desc">Скачай мод во вкладке GameBanana или импортируй свой файл.</p>
+          <button class="pixel-btn" type="button" data-tab-jump="browse" data-i18n="mods.empty.btn">ОТКРЫТЬ GAMEBANANA</button>
+        </div>
+      </section>
+    </div>
+    <div class="mods-foot">
+      <span data-i18n="mods.foot.left">МОДЫ ПРЕДОСТАВЛЯЕТ GAMEBANANA · АВТОРЫ СОХРАНЯЮТ ПРАВА</span>
+      <span class="mods-foot-right"><svg class="pixel-icon" aria-hidden="true"><use href="#i-wifi"/></svg><span id="modsFootStatus">API READY</span></span>
+    </div>
+  </section>
+
+  <section id="demoView" class="view demo-view is-hidden" aria-hidden="true" aria-label="SOUL TRIAL demo">
+    <div class="demo-stage" id="demoStage">
+      <div class="game-frame" id="gameFrame">
+      <canvas id="gameCanvas" width="480" height="270" aria-label="SOUL TRIAL game"></canvas>
+      <div class="demo-crt" aria-hidden="true"></div>
+      <div class="demo-topbar">
+        <button class="demo-back" type="button" id="demoQuit" aria-label="Выйти в меню"><svg class="pixel-icon" aria-hidden="true"><use href="#i-back"/></svg><span data-i18n="game.menu">МЕНЮ</span></button>
+        <div class="demo-title"><span class="demo-kicker">SOUL TRIAL</span><span class="demo-room" id="demoRoom">RUINS // ROOM 01</span></div>
+        <button class="demo-pause" type="button" id="demoPause" aria-label="Пауза"><svg class="pixel-icon" aria-hidden="true"><use href="#i-pause"/></svg></button>
+      </div>
+      <div class="demo-hud">
+        <div class="hud-hp"><span class="hud-label">HP</span><div class="hp-track"><span id="hpFill"></span></div><span id="hpText">20 / 20</span></div>
+        <div class="hud-pack" id="hudPack"><span class="mod-dot"></span><span id="hudPackName">DEFAULT SOUL</span></div>
+      </div>
+      <div class="dialogue-box is-hidden" id="dialogueBox" role="dialog" aria-live="polite">
+        <div class="dialogue-name" id="dialogueName">MIMO</div>
+        <p class="dialogue-text" id="dialogueText"></p>
+        <div class="dialogue-next" id="dialogueNext">▼ <span data-i18n="game.next">ДАЛЬШЕ</span></div>
+      </div>
+      <div class="battle-banner is-hidden" id="battleBanner"><span data-i18n="game.dodge">УКЛОНЯЙСЯ!</span><small id="battleTimer">15.0</small></div>
+      <div class="pause-overlay is-hidden" id="pauseOverlay">
+        <div class="pause-card">
+          <span class="subpage-kicker">PAUSED</span>
+          <h2 data-i18n="game.paused">ПАУЗА</h2>
+          <button class="pixel-btn" type="button" id="resumeBtn" data-i18n="game.resume">ПРОДОЛЖИТЬ</button>
+          <button class="pixel-btn ghost" type="button" id="pauseSettings" data-i18n="game.settings">НАСТРОЙКИ</button>
+          <button class="pixel-btn ghost" type="button" id="pauseQuit" data-i18n="game.quit">В ГЛАВНОЕ МЕНЮ</button>
+        </div>
+      </div>
+      <div class="rotate-hint" id="rotateHint"><span>↻</span><p data-i18n="game.rotate">Поверни устройство — так удобнее</p></div>
+      </div>
+      <div class="touch-layer game-touch" id="gameTouch" aria-label="Game touch controls">
+        <div class="dpad" role="group" aria-label="D-pad">
+          <button class="pad-btn pad-up" type="button" data-dir="up" aria-label="Вверх"><span>▲</span></button>
+          <button class="pad-btn pad-left" type="button" data-dir="left" aria-label="Влево"><span>◀</span></button>
+          <button class="pad-btn pad-right" type="button" data-dir="right" aria-label="Вправо"><span>▶</span></button>
+          <button class="pad-btn pad-down" type="button" data-dir="down" aria-label="Вниз"><span>▼</span></button>
+          <span class="dpad-center" aria-hidden="true"></span>
+        </div>
+        <div class="action-cluster">
+          <button class="action-btn action-b" type="button" data-act="b" aria-label="Назад"><span>B</span><small data-i18n="touch.back">BACK</small></button>
+          <button class="action-btn action-a" type="button" data-act="a" aria-label="Действие"><span>A</span><small data-i18n="touch.ok">OK</small></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="bootScreen" class="boot-screen" aria-label="Loading launcher">
+    <div class="boot-inner">
+      <svg class="boot-heart" viewBox="0 0 9 8" aria-hidden="true"><use href="#i-heart"/></svg>
+      <div class="boot-logo">UNDERTALE<span>LAUNCHER</span></div>
+      <div class="boot-bar"><span id="bootBar"></span></div>
+      <div class="boot-log" id="bootLog"></div>
+      <button class="boot-skip" type="button" id="bootSkip" data-i18n="boot.skip">НАЖМИ, ЧТОБЫ ПРОПУСТИТЬ</button>
+    </div>
+  </div>
+
+  <div id="modalRoot" class="modal-root" aria-live="polite"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

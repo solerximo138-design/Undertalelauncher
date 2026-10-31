@@ -1,0 +1,249 @@
+/* ============================== SOUL TRIAL ============================== */
+.demo-view {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(50, 30, 80, 0.35), transparent 55%),
+    #040308;
+}
+.demo-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-frame {
+  position: relative;
+  width: min(100vw, calc(100dvh * 16 / 9));
+  max-width: 1600px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #08060e;
+  box-shadow: 0 0 0 2px rgba(169, 139, 255, 0.18), 0 0 80px rgba(0, 0, 0, 0.9);
+}
+#gameCanvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.demo-crt {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.16) 0, rgba(0, 0, 0, 0.16) 1px, transparent 1px, transparent 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.38) 100%);
+  mix-blend-mode: multiply;
+  z-index: 4;
+}
+body[data-crt="off"] .demo-crt { display: none; }
+
+.demo-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(4, 3, 8, 0.78), transparent);
+}
+.demo-back, .demo-pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 9px;
+  border: 1px solid rgba(169, 139, 255, 0.3);
+  background: rgba(7, 6, 12, 0.62);
+  color: var(--muted);
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(2px);
+}
+.demo-back .pixel-icon, .demo-pause .pixel-icon { font-size: 11px; }
+.demo-back:hover, .demo-pause:hover { color: var(--gold); border-color: var(--gold); }
+.demo-pause { width: 34px; padding: 0; justify-content: center; font-size: 13px; }
+.demo-title { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 2px; text-align: center; }
+.demo-kicker { font-family: var(--font-pixel); font-size: 8px; letter-spacing: 0.18em; color: var(--gold); text-shadow: 2px 2px 0 #000; }
+.demo-room { font-family: var(--font-pixel); font-size: 5px; letter-spacing: 0.12em; color: var(--muted); }
+
+.demo-hud {
+  position: absolute;
+  left: 14px;
+  top: 52px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+.hud-hp {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(5, 4, 10, 0.6);
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--ink-soft);
+}
+.hud-label { color: var(--red); font-size: 6px; }
+.hp-track { width: 92px; height: 7px; border: 1px solid rgba(255, 255, 255, 0.25); padding: 1px; background: rgba(0, 0, 0, 0.55); }
+.hp-track span { display: block; width: 100%; height: 100%; background: var(--gold); transition: width 0.14s steps(3); }
+.hud-hp #hpText { font-size: 5px; color: var(--muted); }
+.hud-pack {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border: 1px solid rgba(169, 139, 255, 0.2);
+  background: rgba(5, 4, 10, 0.5);
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  letter-spacing: 0.05em;
+  color: var(--violet);
+  max-width: 200px;
+}
+.hud-pack span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.dialogue-box {
+  position: absolute;
+  left: 4.5%;
+  right: 4.5%;
+  bottom: 5%;
+  z-index: 7;
+  min-height: 84px;
+  padding: 18px 20px 14px;
+  border: 2px solid #f4f1e8;
+  background: rgba(5, 4, 10, 0.96);
+  box-shadow: 0 0 0 2px #000, 6px 6px 0 rgba(0, 0, 0, 0.55);
+}
+.dialogue-name {
+  position: absolute;
+  top: -13px;
+  left: 14px;
+  padding: 4px 8px;
+  border: 2px solid #f4f1e8;
+  background: #0a0812;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+.dialogue-text { font-family: var(--font-dialogue); font-size: clamp(18px, 2.4vw, 27px); line-height: 1.25; color: #f7f3e7; white-space: pre-wrap; }
+.dialogue-next { position: absolute; right: 14px; bottom: 7px; font-family: var(--font-pixel); font-size: 6px; letter-spacing: 0.06em; color: var(--red); animation: blink 0.9s steps(1) infinite; }
+.dialogue-box.is-hidden { display: none; }
+
+.battle-banner {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 59, 71, 0.45);
+  background: rgba(12, 6, 12, 0.72);
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: #ff9da3;
+  text-shadow: 2px 2px 0 #000;
+  animation: glowPulse 0.8s steps(2) infinite;
+}
+.battle-banner small { font-size: 7px; color: var(--gold); letter-spacing: 0.06em; }
+.battle-banner.is-hidden { display: none; }
+
+.pause-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 3, 8, 0.82);
+  backdrop-filter: blur(4px);
+}
+.pause-overlay.is-hidden { display: none; }
+.pause-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  width: min(320px, calc(100% - 40px));
+  padding: 24px;
+  border: 2px solid var(--line);
+  background: var(--panel-solid);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+.pause-card h2 { margin: 4px 0 8px; font-family: var(--font-pixel); font-size: 16px; font-weight: 400; color: var(--gold); }
+.pause-card .pixel-btn { width: 100%; }
+
+.rotate-hint {
+  position: fixed;
+  left: 50%;
+  bottom: calc(196px + var(--safe-bottom));
+  z-index: 65;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  transform: translateX(-50%);
+  padding: 7px 12px;
+  border: 1px solid var(--line-soft);
+  background: rgba(8, 6, 14, 0.82);
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.rotate-hint span { color: var(--gold); font-size: 13px; }
+body[data-view="demo"].show-touch .rotate-hint.is-portrait { display: flex; }
+
+/* game touch: slightly larger hit targets, floating over the stage */
+.game-touch { z-index: 75; }
+.game-touch .dpad { grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); }
+.game-touch .action-btn { width: 64px; height: 64px; }
+body.show-touch[data-view="demo"].is-paused .game-touch { display: none; }
+
+@media (max-width: 760px) {
+  .game-frame { width: 100vw; max-height: 100dvh; }
+  .demo-topbar { padding: 8px 10px; }
+  .demo-title { margin-top: 1px; }
+  .demo-kicker { font-size: 6px; }
+  .demo-room { display: none; }
+  .demo-hud { top: 44px; left: 10px; }
+  .hud-hp { padding: 4px 6px; gap: 5px; }
+  .hp-track { width: 72px; }
+  .dialogue-box { left: 3%; right: 3%; bottom: 4%; min-height: 64px; padding: 14px 14px 10px; }
+  .dialogue-text { font-size: 19px; }
+  .dialogue-name { top: -11px; left: 10px; padding: 3px 6px; font-size: 5px; }
+  .dialogue-next { right: 10px; bottom: 5px; font-size: 5px; }
+  .battle-banner { top: 54px; font-size: 6px; }
+  .battle-banner small { font-size: 6px; }
+}
+@media (orientation: portrait) and (max-width: 900px) {
+  .demo-stage { align-items: flex-start; padding-top: 11vh; padding-bottom: calc(190px + var(--safe-bottom)); }
+  .game-frame { width: 100vw; }
+  .game-touch { bottom: calc(12px + var(--safe-bottom)); }
+}
+@media (max-height: 480px) and (orientation: landscape) {
+  .demo-hud { top: 40px; }
+  .dialogue-box { min-height: 56px; padding: 12px 14px 8px; bottom: 3%; }
+  .dialogue-text { font-size: 18px; }
+  .game-touch { bottom: calc(8px + var(--safe-bottom)); }
+  .game-touch .dpad { grid-template-columns: repeat(3, 42px); grid-template-rows: repeat(3, 42px); }
+  .game-touch .action-btn { width: 54px; height: 54px; }
+  .touch-layer { padding: 0 12px; }
+  /* keep the dialogue readable above the on-screen pad */
+  body.show-touch .dialogue-box { bottom: calc(150px + var(--safe-bottom)); }
+  body.show-touch .dialogue-name { top: -10px; }
+}
