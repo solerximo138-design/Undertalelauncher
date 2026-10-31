@@ -5,6 +5,10 @@ screenshots/
 
 *.pid
 
+android/build/
+
+android/app/src/main/assets/www/
+
 .agents/
 
 .agentsweb/

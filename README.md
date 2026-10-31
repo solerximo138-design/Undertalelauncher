@@ -1,19 +1,138 @@
-# Undertalelauncher
+# SOUL LINK — Undertale Launcher
 
-<!-- omgithub:readme:start -->
-## 🚀 Build, play, and remix with OMGithub
+Неофициальный карманный лаунчер в стиле UNDERTALE: оригинальный пиксельный пролог,
+мобильное управление и встроенный браузер модов GameBanana.
 
-**Remixed using [OMGithub.com](https://omgithub.com).**
+> Это фанатский проект. UNDERTALE © Toby Fox. Игра не содержит оригинальных
+> ассетов, музыки или текстов UNDERTALE. Моды принадлежат их авторам, а каталог
+> загружается через публичный API GameBanana.
 
-[![OMGithub](https://img.shields.io/badge/OMGithub-Open%20project-orange?style=for-the-badge)](https://omgithub.com/solerximo138-design/Undertalelauncher)
-[![GitHub](https://img.shields.io/badge/GitHub-Source-181717?logo=github&style=for-the-badge)](https://github.com/solerximo138-design/Undertalelauncher)
+## Что внутри
 
-- 🎮 [Open the project](https://omgithub.com/solerximo138-design/Undertalelauncher).
-- ✨ [Remix this project](https://omgithub.com/?remix=solerximo138-design%2FUndertalelauncher).
-- 💻 [Explore the source](https://github.com/solerximo138-design/Undertalelauncher).
-- 🛠️ [Check build runs](https://github.com/solerximo138-design/Undertalelauncher/actions).
-- 🐛 [Report an issue](https://github.com/solerximo138-design/Undertalelauncher/issues).
-- 👤 [Explore the creator's projects](https://omgithub.com/solerximo138-design).
-- 🌍 [Create with OMGithub](https://omgithub.com).
-- 🧬 [Explore the remix source](https://github.com/solerximo138-design/Undertalelauncher).
-<!-- omgithub:readme:end -->
+- **Главное меню ровно из трёх пунктов:** `Новая игра`, `Настройки`, `Моды`.
+- **Оригинальный пролог «THE SEAM»** — короткое приключение на canvas 480×320:
+  исследование, три лепестка, NPC, звезда сохранения, опасности, 15-секундная
+  битва с эхом и финальные врата.
+- **Пиксельное мобильное управление**: D-pad и кнопки `A` / `B`, увеличенные зоны
+  нажатия, вибро-отклик, настройки левши и постоянного показа контролов.
+- **Mod browser прямо в лаунчере**: живой каталог GameBanana (Undertale, game id
+  `5506`), поиск, категории, сортировка, карточки модов, скриншоты, файлы и
+  установка в один тап.
+- **Форматы сообщества**: `data.win`, ZIP-архивы с `data.win` / `game.win` внутри,
+  а также `.xdelta`, `.patch`, `.bps`. ZIP распаковывается прямо в браузере.
+- **Локальная библиотека**: установленные моды хранятся в IndexedDB, можно
+  включать/выключать, экспортировать и удалять.
+- **RU / EN**, русский интерфейс по умолчанию. Выбор языка запоминается.
+- **Android APK** с полноэкранным WebView, нативной загрузкой модов и кнопкой
+  «Назад».
+
+## Быстрый запуск (web)
+
+```bash
+# любой статический сервер из корня проекта
+python3 -m http.server 3000
+# открыть http://localhost:3000
+```
+
+На OMGithub используется `start.sh`. Приложение полностью статическое: HTML, CSS,
+vanilla JS, вендорный JSZip и локальные OFL-шрифты.
+
+## Управление
+
+| Действие | Клавиатура | Телефон |
+| --- | --- | --- |
+| Движение | `← ↑ → ↓` / `WASD` | D-pad |
+| Действие / подтвердить | `Z`, `Enter`, `Space` | `A` |
+| Отмена / назад | `X`, `Esc`, `Backspace` | `B` |
+| Моды | `M` | меню → «Моды» |
+| Настройки | `S` | меню → «Настройки» |
+| Новая игра | `N` | меню → «Новая игра» |
+| Полный экран | `F` | кнопка в шапке |
+
+На Android системная кнопка «Назад» закрывает модальное окно, затем возвращает в
+главное меню, а на главном экране выходит из приложения.
+
+## Моды и GameBanana
+
+- Каталог: `https://gamebanana.com/apiv11/Game/5506/Subfeed`.
+- Детали и файлы: `Mod/{id}/ProfilePage`, `Mod/{id}/Files`.
+- Если API недоступен, показывается кэшированный набор реальных модов.
+- **Web:** прямая загрузка с GameBanana блокируется CORS на промежуточном
+  редиректе `files.gamebanana.com`. Приложение сначала пробует прямой запрос,
+  затем публичный CORS-прокси. Если оба способа недоступны, показываются кнопки
+  «Открыть на GameBanana» и «Импортировать файл».
+- **Android:** файл скачивается нативно через `HttpURLConnection` (без CORS),
+  кладётся в кэш приложения и отдаётся WebView по локальному адресу
+  `https://app.soullink.local/__cache__/…`. Поэтому установка из каталога
+  работает без прокси.
+
+### Что именно применяется
+
+`data.win` проверяется по сигнатуре `FORM` + `GEN8`. Активный мод определяет
+детерминированную цветовую палитру и визуальный профиль оригинального пролога.
+Лаунчер **не исполняет** GameMaker-байткод и не запускает полноценную UNDERTALE:
+это честная демонстрация интеграции модов, а не эмулятор игры. Патчи
+`.xdelta`/`.bps` сохраняются в библиотеке как файлы сообщества.
+
+## Android APK
+
+Готовая debug-подписанная сборка:
+
+```
+download/soul-link-launcher.apk
+```
+
+- Package: `com.soullink.undertalelauncher`
+- Label: `SOUL LINK`
+- minSdk 23 (Android 6.0), targetSdk 35
+- Разрешения: интернет, состояние сети, запись в хранилище только до Android 9.
+
+Установка: скачать APK на телефон → разрешить установку из неизвестных источников
+→ открыть файл. Это debug-подпись для сайдлоада, не для Google Play.
+
+### Сборка APK без Gradle
+
+Нужны Android SDK, build-tools и JDK:
+
+```bash
+ANDROID_HOME=/path/to/android-sdk bash tools/build-apk.sh
+```
+
+Скрипт сам копирует веб-ассеты в `android/app/src/main/assets/www`, собирает
+ресурсы через `aapt2`, компилирует Java, делает dex через `d8`, выравнивает
+`zipalign` и подписывает `apksigner`. Keystore лежит в
+`android/keystore/soullink-debug.jks` (пароль `soullink`), чтобы обновления
+ставились поверх предыдущей версии.
+
+Иконки пересоздаются командой:
+
+```bash
+python3 tools/make-icons.py
+```
+
+## Структура
+
+```
+index.html                 разметка, иконки, экраны и модальные окна
+styles.css                 дизайн, адаптив, игровые контролы
+js/i18n.js                 RU/EN словари
+js/data.js                 кэш модов, палитры, диалоги
+js/store.js                настройки, IndexedDB, библиотека модов
+js/mods.js                 GameBanana API, загрузка, ZIP, установка
+js/game.js                 оригинальный пролог «THE SEAM»
+js/app.js                  роутинг, ввод, настройки, Android-back
+android/                   исходники WebView-обёртки
+tools/build-apk.sh         сборка APK без Gradle
+tools/make-icons.py        генерация PNG-иконок
+vendor/jszip.min.js        распаковка ZIP
+download/                  готовый APK
+```
+
+## Лицензии
+
+- Шрифты `Pixelify Sans`, `Press Start 2P` и `VT323` — SIL Open Font License,
+  тексты лицензий в `assets/fonts/`.
+- JSZip — MIT.
+- Код лаунчера — фанатский проект; соблюдайте права авторов модов и правообладателей.
+
+Сделано в [OMGithub](https://omgithub.com/solerximo138-design/Undertalelauncher).

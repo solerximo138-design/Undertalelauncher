@@ -208,6 +208,28 @@
     } catch (_) {}
   }
 
+  /* Hardware back button inside the Android wrapper. */
+  window.SLAndroidBack = function () {
+    if (appState.modalOpen) {
+      closeModal(false);
+      return 'handled';
+    }
+    if (appState.view === 'game') {
+      if (SL.game && SL.game.mode() === 'paused') {
+        SL.game.resume();
+        return 'handled';
+      }
+      stopGame();
+      navigate('home');
+      return 'handled';
+    }
+    if (appState.view !== 'home') {
+      navigate('home');
+      return 'handled';
+    }
+    return 'exit';
+  };
+
   function startGame() {
     const canvas = $('game-canvas');
     if (!canvas) return;

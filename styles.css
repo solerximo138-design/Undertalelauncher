@@ -68,6 +68,8 @@
 
 * { box-sizing: border-box; }
 
+[hidden] { display: none !important; }
+
 html {
   min-height: 100%;
   background: var(--bg);
@@ -1796,6 +1798,29 @@ input[type='range']::-moz-range-thumb {
   overflow: hidden;
 }
 .progress-line i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--red), var(--gold)); transition: width 0.15s; }
+.dl-manual {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px dashed rgba(255, 214, 94, 0.32);
+  background: rgba(255, 214, 94, 0.05);
+}
+.dl-manual-note {
+  flex: 1 1 220px;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.dl-manual .pixel-button {
+  min-height: 28px;
+  font-size: 9.5px;
+  text-decoration: none;
+  white-space: nowrap;
+}
 .modal-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
 .modal-actions .modal-spacer { flex: 1; }
 .modal-hint { color: var(--muted-dim); font-size: 11.5px; line-height: 1.45; margin-top: 12px; }
